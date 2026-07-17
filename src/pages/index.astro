@@ -28,6 +28,8 @@ const projects = [
     title: "Stack Exercise App",
     text: "A personal fitness app concept focused on making strength training easier to plan, track, and sustain. The project explores workout structure, progression, mobile-first interaction, and a cleaner way to connect habit formation with measurable results.",
     meta: "Mobile product design · Exercise tracking · Habit systems",
+    link: "https://apps.apple.com/us/app/st-ck/id6768111057",
+    linkLabel: "View on App Store",
   },
   {
     label: "Professional focus",
@@ -106,6 +108,11 @@ const background = [
             <div>
               <h3>{project.title}</h3>
               <p>{project.text}</p>
+              {"link" in project && (
+                <a class="project-link" href={project.link} rel="noreferrer">
+                  {project.linkLabel}
+                </a>
+              )}
             </div>
             <p class="project-meta">{project.meta}</p>
           </article>

@@ -309,6 +309,20 @@ h3 {
   margin-top: 12px;
 }
 
+.project-link {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 18px;
+  border-bottom: 1px solid var(--copper);
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.project-link:hover {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+
 .project-meta {
   color: var(--green);
 }
