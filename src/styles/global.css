@@ -340,6 +340,19 @@ h3 {
   background: rgba(255, 253, 250, 0.58);
 }
 
+.timeline-link {
+  display: inline-flex;
+  margin-top: 16px;
+  border-bottom: 1px solid var(--copper);
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.timeline-link:hover {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+
 .contact-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

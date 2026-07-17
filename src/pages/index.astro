@@ -46,9 +46,17 @@ const projects = [
 ];
 
 const background = [
-  "Director, Strategic Projects, focused on software, analytics, product strategy, and operational improvement.",
-  "Experience translating ambiguous business problems into practical technical work across teams and disciplines.",
-  "Prior owner and operator of music education businesses, combining teaching, scheduling, service delivery, team management, and growth.",
+  {
+    text: "Director, Strategic Projects, focused on software, analytics, product strategy, and operational improvement.",
+  },
+  {
+    text: "Experience translating ambiguous business problems into practical technical work across teams and disciplines.",
+  },
+  {
+    text: "Prior owner and operator of music education businesses, combining teaching, scheduling, service delivery, team management, and growth.",
+    link: "https://www.fortleemusicschool.com/",
+    linkLabel: "Fort Lee School of Music",
+  },
 ];
 ---
 
@@ -127,7 +135,14 @@ const background = [
       </div>
       <div class="timeline">
         {background.map((item) => (
-          <p>{item}</p>
+          <p>
+            {item.text}
+            {"link" in item && (
+              <a class="timeline-link" href={item.link} rel="noreferrer">
+                {item.linkLabel}
+              </a>
+            )}
+          </p>
         ))}
       </div>
     </section>
