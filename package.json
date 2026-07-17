@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@fontsource-variable/geist": "^5.2.9",
+    "@fontsource-variable/geist-mono": "^5.2.8",
     "astro": "^5.13.0",
     "typescript": "^5.9.2"
-  },
-  "devDependencies": {}
+  }
 }

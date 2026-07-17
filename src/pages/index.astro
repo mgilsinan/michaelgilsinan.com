@@ -1,165 +1,197 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import portrait from "../assets/michael-gilsinan.png";
 
-const focusAreas = [
-  {
-    title: "Technology Leadership",
-    text: "Leading practical technology initiatives across software, operations, analytics, and cross-functional execution.",
-  },
-  {
-    title: "Analytics & Data Platforms",
-    text: "Turning complex operational data into clear reporting, better decisions, and repeatable business processes.",
-  },
-  {
-    title: "Construction Technology",
-    text: "Building and shaping tools that support workforce visibility, project health, and operational performance.",
-  },
-  {
-    title: "Product-Minded Software",
-    text: "Designing useful software around the way people actually work, learn, train, and improve over time.",
-  },
-];
+const LINKEDIN = "https://www.linkedin.com/in/michaelgilsinan";
+const GITHUB = "https://github.com/mgilsinan";
+const STACK_URL = "https://apps.apple.com/us/app/st-ck/id6768111057";
 
 const projects = [
   {
-    label: "Featured project",
-    title: "Stack Exercise App",
-    text: "A personal fitness app concept focused on making strength training easier to plan, track, and sustain. The project explores workout structure, progression, mobile-first interaction, and a cleaner way to connect habit formation with measurable results.",
-    meta: "Mobile product design · Exercise tracking · Habit systems",
-    link: "https://apps.apple.com/us/app/st-ck/id6768111057",
-    linkLabel: "View on App Store",
-  },
-  {
-    label: "Professional focus",
-    title: "Construction Analytics",
-    text: "Broad analytics and reporting work for large-scale construction environments, with an emphasis on workforce activity, labor trends, project visibility, and operational decision support.",
-    meta: "Data modeling · Reporting · Operations",
+    label: "2020 — present · Sitemetric",
+    title: "Data infrastructure for a construction intelligence platform",
+    text: "Sitemetric now tracks 1M+ workers and 16,000+ contractors across 40 states. I have owned parts of the data infrastructure and help customers understand and use the data — pipelines, reporting, and turning what the numbers show into operating decisions. Started in customer experience (SVP), moved into Senior Data Engineer, and now report to the CEO on strategic projects.",
+    meta: ["Data infrastructure", "Reporting", "GTM", "Construction tech"],
     link: "https://www.sitemetric.com/",
     linkLabel: "Sitemetric",
+    featured: true,
   },
   {
-    label: "Platform work",
-    title: "Operational Data Platforms",
-    text: "Systems and workflows that help teams collect, clean, organize, and interpret operational data so leaders can see what is happening and decide what to do next.",
-    meta: "Data pipelines · Business intelligence · Process design",
+    label: "2010 — 2020 · Founder",
+    title: "Fort Lee School of Music",
+    text: "Opened it in the second year of my undergrad. Grew it to two locations — Fort Lee, NJ and New York, NY — including a full gut renovation of a street-level NYC retail space. At peak, thirty teachers and staff running 300+ classes a week, plus event work at the DiMenna Center, Baruch College, and other venues.",
+    meta: ["Founder", "Two locations", "30 staff", "300+ classes / week"],
+    link: "https://www.fortleemusicschool.com/",
+    linkLabel: "Fort Lee School of Music",
+  },
+  {
+    label: "Weekend project · iOS",
+    title: "Stack",
+    text: "A strength-training app I built for myself to keep shipping. React Native via Expo, backend on Railway, RevenueCat for subscription plumbing, Resend for transactional email, submitted through Xcode. Not chasing users — the point is the practice of building something end-to-end.",
+    meta: ["React Native", "Expo", "Railway", "RevenueCat", "Resend"],
+    link: STACK_URL,
+    linkLabel: "View on App Store",
   },
 ];
 
 const background = [
   {
-    text: "Director, Strategic Projects, focused on software, analytics, product strategy, and operational improvement.",
+    text: "Started college as a performance major. In year two I opened Fort Lee School of Music and started hiring classmates. Ran it through a decade — two locations, thirty staff at peak, 300+ classes a week.",
   },
   {
-    text: "Experience translating ambiguous business problems into practical technical work across teams and disciplines.",
+    text: "During the covid shutdown I went back for a second master's in applied analytics with a management concentration. One class left; finishing fall 2026.",
   },
   {
-    text: "Prior owner and operator of music education businesses, combining teaching, scheduling, service delivery, team management, and growth.",
-    link: "https://www.fortleemusicschool.com/",
-    linkLabel: "Fort Lee School of Music",
+    text: "Joined Sitemetric in 2020: Data Control Officer, SVP Customer Experience, then Senior Data Engineer, now Director, Strategic Projects reporting to the CEO.",
   },
 ];
 ---
 
 <BaseLayout>
+  <a class="skip-link" href="#main">Skip to content</a>
   <Header />
-  <main id="top">
-    <section class="hero section-shell" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow">Director, Strategic Projects</p>
-        <h1 id="hero-title">Michael Gilsinan</h1>
-        <p class="lede">
-          Building software, analytics, and practical technology systems that help organizations operate more effectively.
-        </p>
-        <div class="hero-actions" aria-label="Primary links">
-          <a class="button primary" href="#projects">View Projects</a>
-          <a class="button secondary" href="https://www.linkedin.com/in/michaelgilsinan" target="_blank" rel="noreferrer noopener">LinkedIn</a>
-        </div>
-      </div>
-      <aside class="signal-panel" aria-label="Professional focus summary">
-        <div class="portrait-wrap">
-          <img src="/michael-gilsinan.png" alt="Michael Gilsinan" loading="eager" decoding="async" />
-        </div>
-        <div class="signal-grid" aria-hidden="true">
-          <span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <p>Technology leadership</p>
-        <p>Analytics and data platforms</p>
-        <p>Construction technology</p>
-        <p>Product-minded software</p>
-      </aside>
-    </section>
 
-    <section class="section-shell split-section" id="work" aria-labelledby="work-title">
-      <div>
-        <p class="eyebrow">Focus</p>
-        <h2 id="work-title">Where technical execution meets operational judgment.</h2>
-      </div>
-      <div class="focus-grid">
-        {focusAreas.map((area) => (
-          <article class="focus-card">
-            <h3>{area.title}</h3>
-            <p>{area.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="section-shell projects-section" id="projects" aria-labelledby="projects-title">
-      <div class="section-heading">
-        <p class="eyebrow">Selected Work</p>
-        <h2 id="projects-title">A concise portfolio of products, platforms, and operating experience.</h2>
-      </div>
-      <div class="project-list">
-        {projects.map((project) => (
-          <article class="project-card">
-            <p class="project-label">{project.label}</p>
-            <div>
-              <h3>{project.title}</h3>
-              <p>{project.text}</p>
-              {"link" in project && (
-                <a class="project-link" href={project.link} target="_blank" rel="noreferrer noopener">
-                  {project.linkLabel}
-                </a>
-              )}
-            </div>
-            <p class="project-meta">{project.meta}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="section-shell background-section" id="background" aria-labelledby="background-title">
-      <div class="section-heading">
-        <p class="eyebrow">Background</p>
-        <h2 id="background-title">Software, operations, and education experience with a builder's bias.</h2>
-      </div>
-      <div class="timeline">
-        {background.map((item) => (
-          <p>
-            {item.text}
-            {"link" in item && (
-              <a class="timeline-link" href={item.link} target="_blank" rel="noreferrer noopener">
-                {item.linkLabel}
-              </a>
-            )}
+  <main id="main">
+    <div id="top" class="shell">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="mono eyebrow">Director, Strategic Projects · Sitemetric</p>
+          <h1 id="hero-title" class="display">Michael Gilsinan</h1>
+          <p class="lede">
+            I analyze operations, uncover insights in data, build the infrastructure to
+            support them, and turn those insights into action. I currently work at
+            <a class="lede-link" href="https://www.sitemetric.com/" target="_blank" rel="noreferrer noopener">Sitemetric</a>,
+            a platform serving more than 1 million workers and 16,000 contractors across
+            40 states. Before that, I founded a music school while still an undergraduate
+            and grew it into two locations across New York and New Jersey, delivering
+            more than 300 classes each week with a staff of over 30.
           </p>
-        ))}
-      </div>
-    </section>
+          <div class="hero-actions">
+            <a class="button primary" href="#work">
+              See the work
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="button secondary" href={STACK_URL} target="_blank" rel="noreferrer noopener">
+              Stack on the App Store
+              <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="button secondary" href={LINKEDIN} target="_blank" rel="noreferrer noopener">
+              LinkedIn
+            </a>
+          </div>
+        </div>
 
-    <section class="section-shell contact-section" id="contact" aria-labelledby="contact-title">
-      <div>
-        <p class="eyebrow">Contact</p>
-        <h2 id="contact-title">Open to thoughtful conversations about software, analytics, operations, and product ideas.</h2>
-      </div>
-      <div class="contact-links">
-        <a href="https://www.linkedin.com/in/michaelgilsinan" target="_blank" rel="noreferrer noopener">LinkedIn</a>
-      </div>
-    </section>
+        <figure class="portrait">
+          <Image
+            src={portrait}
+            alt="Michael Gilsinan"
+            widths={[280, 460, 720]}
+            sizes="(max-width: 900px) 260px, 380px"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <figcaption class="mono">
+            <span class="status-dot" aria-hidden="true"></span>
+            New York
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="section" id="work" aria-labelledby="work-title">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="mono eyebrow">Work</p>
+            <h2 id="work-title" class="headline">Three things worth pointing at.</h2>
+          </div>
+          <p class="section-index">01 / 03</p>
+        </div>
+
+        <div class="project-list">
+          {
+            projects.map((project) => (
+              <article class={project.featured ? "project featured" : "project"} data-reveal>
+                <div class="project-top">
+                  <p class="project-label">{project.label}</p>
+                </div>
+                <div class="project-body">
+                  <div>
+                    <h3>{project.title}</h3>
+                    <p>{project.text}</p>
+                    <a
+                      class="project-link"
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      {project.linkLabel}
+                      <span class="arrow" aria-hidden="true">
+                        ↗
+                      </span>
+                    </a>
+                  </div>
+                  <div class="project-meta">
+                    {project.meta.map((tag) => (
+                      <span>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section" id="background" aria-labelledby="background-title">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="mono eyebrow">Background</p>
+            <h2 id="background-title" class="headline">Founder, then engineer, then both.</h2>
+          </div>
+          <p class="section-index">02 / 03</p>
+        </div>
+
+        <div class="timeline">
+          {
+            background.map((item) => (
+              <div class="timeline-item" data-reveal>
+                <p>{item.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section" id="contact" aria-labelledby="contact-title">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="mono eyebrow">Contact</p>
+          </div>
+          <p class="section-index">03 / 03</p>
+        </div>
+
+        <div class="contact" data-reveal>
+          <h2 id="contact-title" class="headline">Say hi.</h2>
+          <p class="lede">
+            Happy to talk about data, construction tech, running a services business, or
+            anything I've shipped.
+          </p>
+          <div class="contact-actions">
+            <a class="button primary" href={LINKEDIN} target="_blank" rel="noreferrer noopener">
+              Connect on LinkedIn
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="button secondary" href={GITHUB} target="_blank" rel="noreferrer noopener">
+              GitHub
+              <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
+
   <Footer />
 </BaseLayout>
