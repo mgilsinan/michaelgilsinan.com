@@ -72,8 +72,8 @@ const background = [
         </p>
         <div class="hero-actions" aria-label="Primary links">
           <a class="button primary" href="#projects">View Projects</a>
-          <a class="button secondary" href="https://github.com/mgilsinan" rel="noreferrer">GitHub</a>
-          <a class="button secondary" href="https://www.linkedin.com/in/michaelgilsinan" rel="noreferrer">LinkedIn</a>
+          <a class="button secondary" href="https://github.com/mgilsinan" target="_blank" rel="noreferrer noopener">GitHub</a>
+          <a class="button secondary" href="https://www.linkedin.com/in/michaelgilsinan" target="_blank" rel="noreferrer noopener">LinkedIn</a>
         </div>
       </div>
       <aside class="signal-panel" aria-label="Professional focus summary">
@@ -117,7 +117,7 @@ const background = [
               <h3>{project.title}</h3>
               <p>{project.text}</p>
               {"link" in project && (
-                <a class="project-link" href={project.link} rel="noreferrer">
+                <a class="project-link" href={project.link} target="_blank" rel="noreferrer noopener">
                   {project.linkLabel}
                 </a>
               )}
@@ -138,7 +138,7 @@ const background = [
           <p>
             {item.text}
             {"link" in item && (
-              <a class="timeline-link" href={item.link} rel="noreferrer">
+              <a class="timeline-link" href={item.link} target="_blank" rel="noreferrer noopener">
                 {item.linkLabel}
               </a>
             )}
@@ -154,8 +154,8 @@ const background = [
       </div>
       <div class="contact-links">
         <a href="mailto:hello@michaelgilsinan.com">Email</a>
-        <a href="https://github.com/mgilsinan" rel="noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/michaelgilsinan" rel="noreferrer">LinkedIn</a>
+        <a href="https://github.com/mgilsinan" target="_blank" rel="noreferrer noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/michaelgilsinan" target="_blank" rel="noreferrer noopener">LinkedIn</a>
       </div>
     </section>
   </main>
