@@ -1,9 +1,13 @@
 {
   "name": "Michael Gilsinan",
   "short_name": "Michael Gilsinan",
-  "description": "Technology leadership, analytics, and product-minded software.",
+  "description": "Director, Strategic Projects at Sitemetric. Founded Fort Lee School of Music. Shipped Stack on iOS.",
   "start_url": "/",
   "display": "minimal-ui",
   "background_color": "#0b0b0d",
-  "theme_color": "#0b0b0d"
+  "theme_color": "#0b0b0d",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
 }
