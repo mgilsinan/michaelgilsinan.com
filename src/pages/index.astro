@@ -1,0 +1,141 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const focusAreas = [
+  {
+    title: "Technology Leadership",
+    text: "Leading practical technology initiatives across software, operations, analytics, and cross-functional execution.",
+  },
+  {
+    title: "Analytics & Data Platforms",
+    text: "Turning complex operational data into clear reporting, better decisions, and repeatable business processes.",
+  },
+  {
+    title: "Construction Technology",
+    text: "Building and shaping tools that support workforce visibility, project health, and operational performance.",
+  },
+  {
+    title: "Product-Minded Software",
+    text: "Designing useful software around the way people actually work, learn, train, and improve over time.",
+  },
+];
+
+const projects = [
+  {
+    label: "Featured project",
+    title: "Stack Exercise App",
+    text: "A personal fitness app concept focused on making strength training easier to plan, track, and sustain. The project explores workout structure, progression, mobile-first interaction, and a cleaner way to connect habit formation with measurable results.",
+    meta: "Mobile product design · Exercise tracking · Habit systems",
+  },
+  {
+    label: "Professional focus",
+    title: "Construction Analytics",
+    text: "Broad analytics and reporting work for large-scale construction environments, with an emphasis on workforce activity, labor trends, project visibility, and operational decision support.",
+    meta: "Data modeling · Reporting · Operations",
+  },
+  {
+    label: "Platform work",
+    title: "Operational Data Platforms",
+    text: "Systems and workflows that help teams collect, clean, organize, and interpret operational data so leaders can see what is happening and decide what to do next.",
+    meta: "Data pipelines · Business intelligence · Process design",
+  },
+];
+
+const background = [
+  "Director, Strategic Projects, focused on software, analytics, product strategy, and operational improvement.",
+  "Experience translating ambiguous business problems into practical technical work across teams and disciplines.",
+  "Prior owner and operator of music education businesses, combining teaching, scheduling, service delivery, team management, and growth.",
+];
+---
+
+<BaseLayout>
+  <Header />
+  <main id="top">
+    <section class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Director, Strategic Projects</p>
+        <h1 id="hero-title">Michael Gilsinan</h1>
+        <p class="lede">
+          Building software, analytics, and practical technology systems that help organizations operate more effectively.
+        </p>
+        <div class="hero-actions" aria-label="Primary links">
+          <a class="button primary" href="#projects">View Projects</a>
+          <a class="button secondary" href="https://github.com/" rel="noreferrer">GitHub</a>
+          <a class="button secondary" href="https://www.linkedin.com/" rel="noreferrer">LinkedIn</a>
+        </div>
+      </div>
+      <aside class="signal-panel" aria-label="Professional focus summary">
+        <div class="signal-grid" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <p>Technology leadership</p>
+        <p>Analytics and data platforms</p>
+        <p>Construction technology</p>
+        <p>Product-minded software</p>
+      </aside>
+    </section>
+
+    <section class="section-shell split-section" id="work" aria-labelledby="work-title">
+      <div>
+        <p class="eyebrow">Focus</p>
+        <h2 id="work-title">Where technical execution meets operational judgment.</h2>
+      </div>
+      <div class="focus-grid">
+        {focusAreas.map((area) => (
+          <article class="focus-card">
+            <h3>{area.title}</h3>
+            <p>{area.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section-shell projects-section" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <p class="eyebrow">Selected Work</p>
+        <h2 id="projects-title">A concise portfolio of products, platforms, and operating experience.</h2>
+      </div>
+      <div class="project-list">
+        {projects.map((project) => (
+          <article class="project-card">
+            <p class="project-label">{project.label}</p>
+            <div>
+              <h3>{project.title}</h3>
+              <p>{project.text}</p>
+            </div>
+            <p class="project-meta">{project.meta}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section-shell background-section" id="background" aria-labelledby="background-title">
+      <div class="section-heading">
+        <p class="eyebrow">Background</p>
+        <h2 id="background-title">Software, operations, and education experience with a builder's bias.</h2>
+      </div>
+      <div class="timeline">
+        {background.map((item) => (
+          <p>{item}</p>
+        ))}
+      </div>
+    </section>
+
+    <section class="section-shell contact-section" id="contact" aria-labelledby="contact-title">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Open to thoughtful conversations about software, analytics, operations, and product ideas.</h2>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:hello@michaelgilsinan.com">Email</a>
+        <a href="https://github.com/" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/" rel="noreferrer">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
