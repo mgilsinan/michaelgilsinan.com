@@ -4,6 +4,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import portrait from "../assets/michael-gilsinan.png";
+import musicSchoolMap from "../assets/music-school-map.png";
+import musicSchoolInstruments from "../assets/music-school-instruments.png";
+import stackVolume from "../assets/stack-volume-trend.png";
+import stackCoach from "../assets/stack-coach.png";
+import stackPlan from "../assets/stack-plan.png";
 
 const LINKEDIN = "https://www.linkedin.com/in/michaelgilsinan";
 const GITHUB = "https://github.com/mgilsinan";
@@ -26,6 +31,18 @@ const projects = [
     meta: ["Founder", "Two locations", "30 staff", "300+ classes / week"],
     link: "https://www.fortleemusicschool.com/",
     linkLabel: "Fort Lee School of Music",
+    visuals: [
+      {
+        src: musicSchoolMap,
+        alt: "Map of the New York / New Jersey metro area with orange markers showing where 1,419 students came from, clustered densely around Fort Lee and upper Manhattan.",
+        caption: "Where they came from — 1,419 students across the NY / NJ metro.",
+      },
+      {
+        src: musicSchoolInstruments,
+        alt: "The same metro map with markers colored by instrument — piano, guitar, and voice the most common — led by 461 piano and 322 guitar students.",
+        caption: "Enrollment spanned nine instruments, led by piano, guitar, voice, and violin.",
+      },
+    ],
   },
   {
     label: "Weekend project · iOS",
@@ -34,6 +51,11 @@ const projects = [
     meta: ["React Native", "Expo", "Railway", "RevenueCat", "Resend"],
     link: STACK_URL,
     linkLabel: "View on App Store",
+    gallery: [
+      { src: stackPlan, alt: "Stack app — workout plan screen with a body map and per-day muscle checklist." },
+      { src: stackCoach, alt: "Stack app — the built-in aiCoach answering a training question about rest between sets." },
+      { src: stackVolume, alt: "Stack app — weekly volume trend for bench press with an expanded per-set history." },
+    ],
   },
 ];
 
@@ -140,6 +162,37 @@ const background = [
                     ))}
                   </div>
                 </div>
+                {project.gallery && (
+                  <div class="project-gallery">
+                    {project.gallery.map((shot) => (
+                      <figure class="shot">
+                        <Image
+                          src={shot.src}
+                          alt={shot.alt}
+                          widths={[240, 420]}
+                          sizes="(max-width: 720px) 60vw, 240px"
+                          loading="lazy"
+                        />
+                      </figure>
+                    ))}
+                  </div>
+                )}
+                {project.visuals && (
+                  <div class="project-visuals">
+                    {project.visuals.map((visual) => (
+                      <figure class="project-visual">
+                        <Image
+                          src={visual.src}
+                          alt={visual.alt}
+                          widths={[420, 620, 840]}
+                          sizes="(max-width: 720px) 92vw, 420px"
+                          loading="lazy"
+                        />
+                        <figcaption class="mono">{visual.caption}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
               </article>
             ))
           }
