@@ -673,11 +673,17 @@ img {
   letter-spacing: 0.03em;
 }
 
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin-top: 22px;
+}
+
 .project-link {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-top: 22px;
   color: var(--ink);
   font-weight: 600;
   font-size: 0.95rem;

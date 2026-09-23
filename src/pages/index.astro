@@ -20,17 +20,18 @@ const projects = [
     title: "Data infrastructure for a construction intelligence platform",
     text: "Sitemetric helps owners, general contractors, and subcontractors manage projects through real-time data, AI, and connected field operations. Today, the platform supports more than 1 million workers and 16,000 contractors across 40 states. I've helped build the company's data infrastructure—from pipelines and reporting systems to analytics that turn operational data into business decisions. My roles have included SVP of Customer Experience and Senior Data Engineer. Today, I serve as Director of Strategic Projects, reporting directly to the CEO.",
     meta: ["Data infrastructure", "Reporting", "GTM", "Construction tech"],
-    link: "https://www.sitemetric.com/",
-    linkLabel: "Sitemetric",
+    links: [{ href: "https://www.sitemetric.com/", label: "Sitemetric" }],
     featured: true,
   },
   {
     label: "2010 — 2020 · Founder",
     title: "Fort Lee School of Music",
-    text: "Opened Fort Lee School of Music during the second year of my undergraduate studies and grew it to two locations in Fort Lee, NJ, and New York, NY. The expansion included raising capital, hiring architects, and overseeing the full gut renovation and build-out of a street-level Manhattan retail space. At its peak, the school employed 30 teachers and staff, delivered more than 300 classes per week, and produced events at the DiMenna Center, Baruch College, and other venues.",
+    text: "Opened Fort Lee School of Music during the second year of my undergraduate studies and grew it to two locations in Fort Lee, NJ, and New York, NY. The expansion included raising capital, hiring architects, and overseeing the full gut renovation and build-out of a street-level Manhattan retail space. At its peak, the school employed 30 teachers and staff, delivered more than 300 classes per week, and produced events at the DiMenna Center, Baruch College, and other venues. Praxis Stack grew out of the school: studio-management software for music schools and private studios, shaped by a decade of scheduling lessons, billing families, and paying teachers.",
     meta: ["Founder", "Two locations", "30 staff", "300+ classes / week"],
-    link: "https://www.fortleemusicschool.com/",
-    linkLabel: "Fort Lee School of Music",
+    links: [
+      { href: "https://www.fortleemusicschool.com/", label: "Fort Lee School of Music" },
+      { href: "https://www.praxisstack.com/", label: "Praxis Stack" },
+    ],
     visuals: [
       {
         src: musicSchoolMap,
@@ -49,8 +50,7 @@ const projects = [
     title: "Stack",
     text: "A strength-training app I built for myself to support my own workouts while practicing how to ship real products. Built with React Native and Expo, with a Railway backend, RevenueCat for subscriptions, Resend for transactional email, and Xcode for App Store submission. I’m not chasing user growth—the point is to keep exercising, building, launching, and maintaining something end to end.",
     meta: ["React Native", "Expo", "Railway", "RevenueCat", "Resend"],
-    link: STACK_URL,
-    linkLabel: "View on App Store",
+    links: [{ href: STACK_URL, label: "View on App Store" }],
     gallery: [
       { src: stackPlan, alt: "Stack app — workout plan screen with a body map and per-day muscle checklist." },
       { src: stackCoach, alt: "Stack app — the built-in aiCoach answering a training question about rest between sets." },
@@ -141,17 +141,21 @@ const background = [
                   <div>
                     <h3>{project.title}</h3>
                     <p>{project.text}</p>
-                    <a
-                      class="project-link"
-                      href={project.link}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      {project.linkLabel}
-                      <span class="arrow" aria-hidden="true">
-                        ↗
-                      </span>
-                    </a>
+                    <div class="project-links">
+                      {project.links.map((link) => (
+                        <a
+                          class="project-link"
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {link.label}
+                          <span class="arrow" aria-hidden="true">
+                            ↗
+                          </span>
+                        </a>
+                      ))}
+                    </div>
                   </div>
                   <div class="project-meta">
                     {project.meta.map((tag) => (
