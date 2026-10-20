@@ -1,0 +1,227 @@
+---
+import { Image, getImage } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ContactCta from "../../components/portfolio/ContactCta.astro";
+import Gallery from "../../components/portfolio/Gallery.astro";
+import Lightbox from "../../components/portfolio/Lightbox.astro";
+import ProjectName from "../../components/portfolio/ProjectName.astro";
+import { caseStudies, spoken, type CaseStudy } from "../../data/portfolio";
+import { SITE_URL } from "../../data/site";
+import "../../styles/portfolio.css";
+
+export function getStaticPaths() {
+  return caseStudies.map((study, i) => ({
+    params: { slug: study.slug },
+    props: { study, next: caseStudies[(i + 1) % caseStudies.length] },
+  }));
+}
+
+interface Props {
+  study: CaseStudy;
+  next: CaseStudy;
+}
+
+const { study, next } = Astro.props;
+const site = Astro.site ?? new URL(SITE_URL);
+const total = String(caseStudies.length).padStart(2, "0");
+const title = `${spoken(study)} — Case Study · Michael Gilsinan`;
+const heroFull = await getImage({
+  src: study.hero.src,
+  width: Math.min(study.hero.src.width, 2400),
+  format: "webp",
+  quality: 85,
+});
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: spoken(study),
+    headline: `${spoken(study)}: ${study.tagline}`,
+    description: study.description,
+    genre: study.categories,
+    url: new URL(`/portfolio/${study.slug}/`, site).href,
+    image: new URL(study.ogImage, site).href,
+    creator: { "@type": "Person", name: "Michael Gilsinan", url: SITE_URL },
+    isPartOf: { "@type": "CollectionPage", url: new URL("/portfolio/", site).href },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Portfolio", item: new URL("/portfolio/", site).href },
+      { "@type": "ListItem", position: 3, name: spoken(study), item: new URL(`/portfolio/${study.slug}/`, site).href },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={study.description}
+  image={study.ogImage}
+  imageAlt={`${spoken(study)} — case study by Michael Gilsinan`}
+  type="article"
+  schema={schema}
+>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <Header contactHref="#contact" />
+
+  <main id="main" class="pf cs">
+    <div id="top">
+      <header class="shell cs-head">
+        <div class="cs-crumbs pf-rise">
+          <a class="cs-back" href="/portfolio/">
+            <span class="arrow" aria-hidden="true">←</span>
+            Portfolio
+          </a>
+          <p class="section-index">
+            {study.number} <span aria-hidden="true">/</span><span class="sr-only">of</span> {total}
+          </p>
+        </div>
+        <ul class="pf-tags pf-rise" aria-label="Categories">
+          {study.categories.map((category) => <li>{category}</li>)}
+        </ul>
+        <h1 class="cs-title pf-rise">
+          <ProjectName title={study.title} spokenTitle={study.spokenTitle} />
+        </h1>
+        <p class="cs-tagline pf-rise">{study.tagline}</p>
+        <dl class="cs-facts pf-rise">
+          {
+            study.facts.map((fact) => (
+              <div>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </header>
+
+      <figure class="shell-wide cs-hero pf-rise">
+        <a
+          class="g-media"
+          href={heroFull.src}
+          data-lightbox
+          data-caption={study.hero.caption ?? ""}
+          style={study.hero.ratio && `--r: ${study.hero.ratio}; --pos: ${study.hero.position ?? "center"}`}
+        >
+          <Image
+            src={study.hero.src}
+            alt={study.hero.alt}
+            widths={[800, 1200, 1600, 2000, 2400].filter((w) => w <= study.hero.src.width)}
+            sizes="(max-width: 1520px) 94vw, 1440px"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <span class="sr-only">(open larger image)</span>
+        </a>
+        {study.hero.caption && <figcaption>{study.hero.caption}</figcaption>}
+      </figure>
+
+      <section class="shell cs-section cs-split" aria-labelledby="overview-title">
+        <h2 id="overview-title" class="mono eyebrow">Overview</h2>
+        <div class="cs-prose" data-reveal>
+          {study.overview.map((paragraph, i) => <p class:list={{ "cs-prose-lead": i === 0 }}>{paragraph}</p>)}
+          {study.note && <p class="cs-note">{study.note}</p>}
+        </div>
+      </section>
+
+      <section class="shell cs-section cs-role-grid" aria-label="Role and outcomes">
+        <div class="cs-role-block" data-reveal>
+          <h2 class="mono eyebrow">My role</h2>
+          <ul class="cs-role">
+            {study.role.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="cs-outcomes-block" data-reveal>
+          <h2 class="mono eyebrow">{study.outcomesLabel ?? "Highlights"}</h2>
+          <dl class="pf-stats">
+            {
+              study.outcomes.map((outcome) => (
+                <div>
+                  <dt>{outcome.label}</dt>
+                  <dd>{outcome.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </section>
+
+      {
+        study.chapters.map((chapter, i) => (
+          <section class="cs-chapter" aria-labelledby={`chapter-${i + 1}`}>
+            <div class="shell cs-chapter-head" data-reveal>
+              <p class="mono eyebrow">{chapter.eyebrow}</p>
+              <div class="cs-chapter-copy">
+                <h2 id={`chapter-${i + 1}`} class="cs-chapter-title">
+                  {chapter.title}
+                </h2>
+                <p>{chapter.text}</p>
+              </div>
+            </div>
+            <div class="shell-wide cs-gallery">
+              {chapter.rows.map((row) => (
+                <Gallery row={row} />
+              ))}
+            </div>
+          </section>
+        ))
+      }
+
+      <section class="shell cs-section cs-split cs-links" aria-labelledby="links-title">
+        <h2 id="links-title" class="mono eyebrow">See the work</h2>
+        <div data-reveal>
+          <div class="cs-links-row">
+            {
+              study.badge && (
+                <Image class="cs-badge" src={study.badge.src} alt={study.badge.alt} width={96} height={96} densities={[1, 2]} />
+              )
+            }
+            <div class="project-links">
+              {
+                study.links.map((link) => (
+                  <a class="project-link" href={link.href} target="_blank" rel="noreferrer noopener">
+                    {link.label}
+                    <span class="arrow" aria-hidden="true">↗</span>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <nav class="shell cs-next" aria-label="Next case study">
+        <a href={`/portfolio/${next.slug}/`} data-reveal>
+          <span class="cs-next-copy">
+            <span class="mono eyebrow">Next · {next.number}</span>
+            <span class="cs-next-title">
+              <ProjectName title={next.title} spokenTitle={next.spokenTitle} />
+              <span class="arrow" aria-hidden="true">→</span>
+            </span>
+            <span class="cs-next-cats">{next.categories.join(" · ")}</span>
+          </span>
+          <span class="cs-next-media" style={`--pos: ${next.hero.position ?? "center"}`}>
+            <Image
+              src={next.hero.src}
+              alt=""
+              widths={[480, 720, 960].filter((w) => w <= next.hero.src.width)}
+              sizes="(max-width: 720px) 94vw, 420px"
+              loading="lazy"
+            />
+          </span>
+        </a>
+      </nav>
+
+      <ContactCta />
+    </div>
+  </main>
+
+  <Footer />
+  <Lightbox />
+</BaseLayout>

@@ -1,14 +1,27 @@
+---
+interface Props {
+  /** Where the Contact link goes; defaults to the homepage section. */
+  contactHref?: string;
+}
+
+// Section links point at the homepage when the header is used on other pages.
+const path = Astro.url.pathname;
+const onHome = path === "/";
+const home = onHome ? "" : "/";
+const { contactHref = `${home}#contact` } = Astro.props;
+---
+
 <header class="site-header">
   <div class="shell header-inner">
-    <a class="brand" href="#top" aria-label="Michael Gilsinan home">
+    <a class="brand" href={onHome ? "#top" : "/"} aria-label="Michael Gilsinan home">
       <span class="brand-mark" aria-hidden="true">MG</span>
       <span>Michael Gilsinan</span>
     </a>
     <div class="header-right">
       <nav class="nav-links" aria-label="Primary">
-        <a href="#work">Work</a>
-        <a href="#background">Background</a>
-        <a href="#contact">Contact</a>
+        <a href={`${home}#work`}>Work</a>
+        <a href={`${home}#background`}>Background</a>
+        <a href={contactHref}>Contact</a>
       </nav>
       <button class="theme-toggle" type="button" aria-label="Switch to light theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

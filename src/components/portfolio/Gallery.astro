@@ -1,0 +1,103 @@
+---
+import { Image, getImage } from "astro:assets";
+import type { Row, Shot } from "../../data/portfolio";
+
+interface Props {
+  row: Row;
+}
+
+const { row } = Astro.props;
+
+const COLUMNS: Record<string, number[]> = {
+  full: [1],
+  pair: [1, 1],
+  "wide-left": [3, 2],
+  "wide-right": [2, 3],
+  trio: [1, 1, 1],
+};
+
+const WIDE = 1440; // max gallery width in CSS px (matches .shell-wide)
+const STEPS = [400, 640, 800, 1024, 1280, 1600, 2000, 2400];
+
+const isPhones = row.layout === "phones";
+const isScreen = row.layout === "screen";
+const onStage = isPhones || isScreen;
+const fr = COLUMNS[row.layout] ?? row.shots.map(() => 1);
+const total = fr.reduce((sum, f) => sum + f, 0);
+const ratioOf = (shot: Shot) => shot.ratio ?? shot.src.width / shot.src.height;
+
+// Multi-column rows share the first shot's height, so each row reads as one band.
+const count = row.shots.length;
+const rowHeight =
+  !onStage && count > 1
+    ? `calc((100cqw - ${count - 1} * var(--g-gap)) * ${(fr[0] / total / ratioOf(row.shots[0])).toFixed(5)})`
+    : undefined;
+
+function widthsFor(shot: Shot, displayWidth: number) {
+  // Cover 2× density on desktop and ~3× on phones, never upscaling the source.
+  const cap = Math.min(shot.src.width, Math.max(displayWidth * 2, 1290));
+  const widths = STEPS.filter((w) => w < cap);
+  return [...widths, cap];
+}
+
+function sizesFor(frac: number) {
+  if (isPhones) return "(max-width: 720px) 62vw, 300px";
+  if (isScreen) return "(max-width: 720px) 92vw, (max-width: 1520px) 86vw, 1300px";
+  if (frac === 1) return "(max-width: 1520px) 94vw, 1440px";
+  if (row.layout === "trio") return `(max-width: 720px) 76vw, (max-width: 1520px) 31vw, 470px`;
+  return `(max-width: 720px) 94vw, (max-width: 1520px) ${Math.round(94 * frac)}vw, ${Math.round(WIDE * frac)}px`;
+}
+
+const shots = await Promise.all(
+  row.shots.map(async (shot, i) => {
+    const frac = onStage ? 1 : (fr[i] ?? 1) / total;
+    const displayWidth = isPhones ? 300 : isScreen ? 1300 : WIDE * frac;
+    const full = await getImage({
+      src: shot.src,
+      width: Math.min(shot.src.width, 2400),
+      format: "webp",
+      quality: onStage ? 90 : 82,
+    });
+    const ratio = ratioOf(shot);
+    return {
+      shot,
+      full: full.src,
+      ratio,
+      // Very wide crops relax to 3:2 on small screens; native panoramas keep their shape.
+      mobileRatio: shot.ratio && shot.ratio > 1.8 ? 1.5 : ratio,
+      widths: widthsFor(shot, displayWidth),
+      sizes: sizesFor(frac),
+      // Screens are captured at 2×; show them near their natural size.
+      maxWidth: isScreen ? `${Math.round((shot.src.width / 2) * 1.15)}px` : undefined,
+    };
+  }),
+);
+
+const gridStyle = !onStage
+  ? `grid-template-columns: ${fr.map((f) => `minmax(0, ${f}fr)`).join(" ")};${rowHeight ? ` --row-h: ${rowHeight};` : ""}`
+  : undefined;
+---
+
+<div class:list={["g-row", `g-${row.layout}`, { "g-matched": rowHeight, "g-stage": onStage }]} style={gridStyle} data-reveal>
+  {
+    shots.map(({ shot, full, ratio, mobileRatio, widths, sizes, maxWidth }) => (
+      <figure
+        class:list={["g-fig", shot.plate && `g-plate-${shot.plate}`]}
+        style={`--r: ${ratio}; --rm: ${mobileRatio}; --pos: ${shot.position ?? "center"};${maxWidth ? ` --mw: ${maxWidth};` : ""}`}
+      >
+        <a class="g-media" href={full} data-lightbox data-caption={shot.caption ?? ""}>
+          <Image
+            src={shot.src}
+            alt={shot.alt}
+            widths={widths}
+            sizes={sizes}
+            loading="lazy"
+            quality={onStage ? 90 : 80}
+          />
+          <span class="sr-only">(open larger image)</span>
+        </a>
+        {shot.caption && <figcaption>{shot.caption}</figcaption>}
+      </figure>
+    ))
+  }
+</div>

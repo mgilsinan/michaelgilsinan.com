@@ -1,0 +1,21 @@
+---
+// Renders a project title, giving screen readers a spoken name when the
+// visual title uses symbols (ST∆CK is read as "Stack").
+interface Props {
+  title: string;
+  spokenTitle?: string;
+}
+
+const { title, spokenTitle } = Astro.props;
+---
+
+{
+  spokenTitle ? (
+    <>
+      <span aria-hidden="true">{title}</span>
+      <span class="sr-only">{spokenTitle}</span>
+    </>
+  ) : (
+    title
+  )
+}
