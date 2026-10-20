@@ -285,6 +285,11 @@ img {
   background: var(--surface-2);
 }
 
+.nav-links a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
 .theme-toggle {
   display: grid;
   place-items: center;
@@ -917,7 +922,8 @@ img {
    --------------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  .nav-links {
+  /* Portfolio stays reachable on small screens; the in-page links hide. */
+  .nav-links a:not(.nav-portfolio) {
     display: none;
   }
 
