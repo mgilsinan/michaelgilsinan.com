@@ -1,0 +1,216 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ContactCta from "../../components/portfolio/ContactCta.astro";
+import ProjectName from "../../components/portfolio/ProjectName.astro";
+import portrait from "../../assets/michael-gilsinan.png";
+import { caseStudies, spoken } from "../../data/portfolio";
+import { LINKEDIN, SITE_URL } from "../../data/site";
+import "../../styles/portfolio.css";
+
+const title = "Creative Portfolio — Michael Gilsinan";
+const description =
+  "Music. Experience. Technology. Selected work by Michael Gilsinan — musician, entrepreneur, and hands-on product builder — across creative environments, brand experience, digital products, and applied AI.";
+const site = Astro.site ?? new URL(SITE_URL);
+const total = String(caseStudies.length).padStart(2, "0");
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: title,
+    description,
+    url: new URL("/portfolio/", site).href,
+    author: { "@type": "Person", name: "Michael Gilsinan", url: SITE_URL },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: caseStudies.map((study, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: spoken(study),
+        url: new URL(`/portfolio/${study.slug}/`, site).href,
+      })),
+    },
+  },
+];
+
+const disciplines = [
+  "Creative environments",
+  "Brand and visual identity",
+  "Live music and events",
+  "Product and interface design",
+  "Applied AI",
+  "Data and analytics",
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image="/og/portfolio.jpg"
+  imageAlt="Michael Gilsinan — Music. Experience. Technology. Creative portfolio."
+  schema={schema}
+>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <Header contactHref="#contact" />
+
+  <main id="main" class="pf">
+    <div id="top">
+      <section class="shell pf-intro" aria-labelledby="pf-title">
+        <p class="mono eyebrow pf-rise">Creative Portfolio · Michael Gilsinan</p>
+        <h1 id="pf-title" class="pf-display">
+          <span class="pf-line"><span>Music<span class="pf-dot">.</span></span></span>
+          <span class="pf-line"><span>Experience<span class="pf-dot">.</span></span></span>
+          <span class="pf-line"><span>Technology<span class="pf-dot">.</span></span></span>
+        </h1>
+        <div class="pf-intro-grid pf-rise">
+          <p class="lede pf-intro-lede">
+            I’m a musician, entrepreneur, and hands-on product builder with experience spanning creative
+            identity, physical environments, digital products, and applied AI. My work connects artistic
+            vision, customer understanding, and technology to take ideas from concept to reality.
+          </p>
+          <dl class="pf-intro-meta">
+            <div>
+              <dt>Practice</dt>
+              <dd>Environments · Brand · Product · AI</dd>
+            </div>
+            <div>
+              <dt>Based in</dt>
+              <dd>New York</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <nav class="shell pf-index" aria-labelledby="pf-index-title">
+        <h2 id="pf-index-title" class="mono eyebrow">Selected work</h2>
+        <ol>
+          {
+            caseStudies.map((study) => (
+              <li>
+                <a href={`/portfolio/${study.slug}/`}>
+                  <span class="pf-index-num">{study.number}</span>
+                  <span class="pf-index-title">
+                    <ProjectName title={study.title} spokenTitle={study.spokenTitle} />
+                  </span>
+                  <span class="pf-index-cat">{study.categories.join(" · ")}</span>
+                  <span class="pf-index-when">{study.when}</span>
+                  <span class="pf-index-arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <section class="pf-features" aria-labelledby="pf-features-title">
+        <h2 id="pf-features-title" class="sr-only">Case studies</h2>
+        {
+          caseStudies.map((study, i) => (
+            <article class:list={["shell-wide", "pf-feature", { "is-flipped": i % 2 === 1 }]} data-reveal>
+              <a
+                class="pf-feature-media"
+                href={`/portfolio/${study.slug}/`}
+                tabindex="-1"
+                aria-hidden="true"
+                style={`--r: ${study.cardRatio}; --pos: ${study.hero.position ?? "center"}`}
+              >
+                <Image
+                  src={study.hero.src}
+                  alt=""
+                  widths={[640, 960, 1280, 1600, 1920].filter((w) => w <= study.hero.src.width)}
+                  sizes="(max-width: 900px) 94vw, (max-width: 1520px) 56vw, 820px"
+                  loading="lazy"
+                />
+              </a>
+              <div class="pf-feature-body">
+                <p class="pf-feature-num mono">
+                  {study.number} <span aria-hidden="true">/</span>
+                  <span class="sr-only">of</span> {total}
+                </p>
+                <h3 class="pf-feature-title">
+                  <a href={`/portfolio/${study.slug}/`}>
+                    <ProjectName title={study.title} spokenTitle={study.spokenTitle} />
+                  </a>
+                </h3>
+                <ul class="pf-tags" aria-label="Categories">
+                  {study.categories.map((category) => (
+                    <li>{category}</li>
+                  ))}
+                </ul>
+                <p class="pf-feature-summary">{study.summary}</p>
+                <dl class="pf-stats is-compact">
+                  {study.outcomes.slice(0, 3).map((outcome) => (
+                    <div>
+                      <dt>{outcome.label}</dt>
+                      <dd>{outcome.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <a class="project-link" href={`/portfolio/${study.slug}/`}>
+                  View case study
+                  <span class="sr-only">: {spoken(study)}</span>
+                  <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+
+      <section class="shell section pf-about" id="about" aria-labelledby="about-title">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="mono eyebrow">About</p>
+            <h2 id="about-title" class="headline">Classically trained guitarist. Founder. Builder.</h2>
+          </div>
+        </div>
+
+        <div class="pf-about-grid">
+          <figure class="pf-about-portrait" data-reveal>
+            <Image
+              src={portrait}
+              alt="Portrait of Michael Gilsinan"
+              widths={[360, 560, 840]}
+              sizes="(max-width: 900px) 70vw, 380px"
+              loading="lazy"
+            />
+          </figure>
+          <div class="pf-about-copy" data-reveal>
+            <p class="lede">
+              I trained as a classical guitarist at a conservatory in New York City and founded Fort Lee
+              School of Music while I was still a student. Over the next decade it grew into a music and
+              arts school with two locations, a full concert calendar, and a team of 30.
+            </p>
+            <p>
+              Today I’m Director of Strategic Projects at
+              <a class="lede-link" href="https://www.sitemetric.com/" target="_blank" rel="noreferrer noopener">Sitemetric</a>,
+              an AI-powered construction intelligence platform, reporting to the CEO. Alongside that work, I
+              design and build my own products — ST∆CK and Praxis Stack among them — from first concept
+              through launch.
+            </p>
+            <ul class="pf-disciplines" aria-label="Disciplines">
+              {disciplines.map((item) => <li>{item}</li>)}
+            </ul>
+            <div class="project-links">
+              <a class="project-link" href="/">
+                michaelgilsinan.com
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="project-link" href={LINKEDIN} target="_blank" rel="noreferrer noopener">
+                LinkedIn
+                <span class="arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <ContactCta />
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

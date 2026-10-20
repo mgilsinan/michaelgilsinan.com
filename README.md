@@ -111,6 +111,28 @@ After DNS updates propagate, return to the GitHub repository's **Pages** setting
 └── tsconfig.json
 ```
 
+## Creative portfolio (`/portfolio`)
+
+The portfolio is an index page plus one case-study page per project, all generated from a single data file.
+
+```text
+src/
+├── data/portfolio.ts              # case-study copy, facts, outcomes, galleries
+├── data/site.ts                   # LinkedIn and site URL used by the portfolio
+├── pages/portfolio/index.astro    # /portfolio/
+├── pages/portfolio/[slug].astro   # /portfolio/<slug>/
+├── components/portfolio/          # Gallery, Lightbox, ContactCta, ProjectName
+├── styles/portfolio.css           # portfolio-only styles (loaded on these pages only)
+└── assets/portfolio/              # optimized project images (EXIF stripped)
+public/og/                         # social preview images for the portfolio pages
+scripts/generate-og-portfolio.mjs  # rebuilds public/og/*
+```
+
+- **Edit copy or add images** in `src/data/portfolio.ts`. Each chapter holds gallery rows (`full`, `pair`, `wide-left`, `wide-right`, `trio`, `phones`, `screen`). `ratio` and `position` art-direct crops.
+- **Add a project** by appending an entry to `caseStudies`; its page, index card, and next-project link are generated automatically.
+- **Social previews**: after changing hero images or titles, run `npm run og:portfolio` and commit `public/og/`.
+- Praxis Stack screens come from the public demo's fictional sample studio. Keep any new screenshots free of real student, family, or staff data.
+
 ## Content guardrails
 
 The current copy keeps private product plans, internal system names, and overly specific job metrics out of the public site. Keep future updates similarly broad unless the information is ready to be public.
