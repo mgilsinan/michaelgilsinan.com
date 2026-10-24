@@ -6,7 +6,6 @@ import suptownLaunchAudience from "../assets/portfolio/suptown/launch-concert-au
 import suptownLaunchViolin from "../assets/portfolio/suptown/launch-concert-violin.jpg";
 import suptownPerformancePiano from "../assets/portfolio/suptown/performance-piano.jpg";
 import suptownStudioDoors from "../assets/portfolio/suptown/studio-doors.jpg";
-import suptownCorridorYellow from "../assets/portfolio/suptown/corridor-yellow.jpg";
 import suptownCorridorTriangle from "../assets/portfolio/suptown/corridor-triangle.jpg";
 import suptownCorridorArt from "../assets/portfolio/suptown/corridor-art.jpg";
 import suptownPracticeRooms from "../assets/portfolio/suptown/practice-rooms.jpg";
@@ -172,24 +171,17 @@ export const caseStudies: CaseStudy[] = [
             ],
           },
           {
-            layout: "trio",
+            layout: "pair",
             shots: [
               {
                 src: suptownCorridorTriangle,
                 alt: "A white corridor with a large yellow triangle painted across the floor-to-ceiling wall; two people stand along the hallway.",
-                ratio: 4 / 5,
-              },
-              {
-                src: suptownCorridorYellow,
-                alt: "A long white hallway with a vertical yellow stripe on the left wall leading toward the studios.",
-                ratio: 4 / 5,
-                position: "38% center",
+                ratio: 4 / 3,
               },
               {
                 src: suptownPracticeRooms,
                 alt: "Two bright yellow practice-room doorways set into a charcoal wall, with framed artwork and black metal chairs.",
-                ratio: 4 / 5,
-                position: "60% center",
+                ratio: 4 / 3,
               },
             ],
           },
