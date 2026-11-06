@@ -3,12 +3,15 @@ import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import VideoEmbed from "../components/VideoEmbed.astro";
 import portrait from "../assets/michael-gilsinan.png";
 import musicSchoolMap from "../assets/music-school-map.png";
 import musicSchoolInstruments from "../assets/music-school-instruments.png";
 import stackVolume from "../assets/stack-volume-trend.png";
 import stackCoach from "../assets/stack-coach.png";
 import stackPlan from "../assets/stack-plan.png";
+import praxisCalendar from "../assets/portfolio/praxis/demo-calendar-attended.png";
+import praxisInsights from "../assets/portfolio/praxis/demo-notes-insights.png";
 
 const LINKEDIN = "https://www.linkedin.com/in/michaelgilsinan";
 const GITHUB = "https://github.com/mgilsinan";
@@ -18,20 +21,22 @@ const projects = [
   {
     label: "2020 — present · Sitemetric",
     title: "Data infrastructure for a construction intelligence platform",
-    text: "Sitemetric helps owners, general contractors, and subcontractors manage projects through real-time data, AI, and connected field operations. Today, the platform supports more than 1 million workers and 16,000 contractors across 40 states. I've helped build the company's data infrastructure—from pipelines and reporting systems to analytics that turn operational data into business decisions. My roles have included SVP of Customer Experience and Senior Data Engineer. Today, I serve as Director of Strategic Projects, reporting directly to the CEO.",
+    text: "Sitemetric helps owners, general contractors, and subcontractors manage projects through real-time data, AI, and connected field operations. I've helped build the company's data infrastructure—from pipelines and reporting systems to analytics that turn operational data into business decisions. My roles have included SVP of Customer Experience and Senior Data Engineer. Today, I serve as Director of Strategic Projects, reporting directly to the CEO.",
     meta: ["Data infrastructure", "Reporting", "GTM", "Construction tech"],
     links: [{ href: "https://www.sitemetric.com/", label: "Sitemetric" }],
+    stats: [
+      { value: "1.5M+", label: "Workers on the platform" },
+      { value: "20,000+", label: "Contractors on the platform" },
+      { value: "40", label: "States" },
+    ],
     featured: true,
   },
   {
     label: "2010 — 2020 · Founder",
     title: "Fort Lee School of Music",
-    text: "Opened Fort Lee School of Music during the second year of my undergraduate studies and grew it to two locations in Fort Lee, NJ, and New York, NY. The expansion included raising capital, hiring architects, and overseeing the full gut renovation and build-out of a street-level Manhattan retail space. At its peak, the school employed 30 teachers and staff, delivered more than 300 classes per week, and produced events at the DiMenna Center, Baruch College, and other venues. Praxis Stack grew out of the school: studio-management software for music schools and private studios, shaped by a decade of scheduling lessons, billing families, and paying teachers.",
+    text: "Opened Fort Lee School of Music during the second year of my undergraduate studies and grew it to two locations in Fort Lee, NJ, and New York, NY. The expansion included raising capital, hiring architects, and overseeing the full gut renovation and build-out of a street-level Manhattan retail space. At its peak, the school employed 30 teachers and staff, delivered more than 300 classes per week, and produced events at the DiMenna Center, Baruch College, and other venues.",
     meta: ["Founder", "Two locations", "30 staff", "300+ classes / week"],
-    links: [
-      { href: "https://www.fortleemusicschool.com/", label: "Fort Lee School of Music" },
-      { href: "https://www.praxisstack.com/", label: "Praxis Stack" },
-    ],
+    links: [{ href: "https://www.fortleemusicschool.com/", label: "Fort Lee School of Music" }],
     visuals: [
       {
         src: musicSchoolMap,
@@ -44,6 +49,30 @@ const projects = [
         caption: "Enrollment spanned nine instruments, led by piano, guitar, voice, and violin.",
       },
     ],
+  },
+  {
+    label: "Music technology · Web",
+    title: "Praxis Stack",
+    text: "Studio-management software for music schools and private studios, shaped by a decade of scheduling lessons, billing families, and paying teachers at Fort Lee School of Music. I designed and built it independently around one idea: attendance is the source of truth. Mark a lesson attended and the family's ledger, the teacher's pay, and the studio's reports all update from that single action. An AI feature reads instructor lesson notes to surface individual student insights and studio-wide trends. Today it supports the school's continuing students and day-to-day operations.",
+    meta: ["Solo designer & developer", "Scheduling & billing", "Payroll", "Applied AI"],
+    links: [
+      { href: "https://www.praxisstack.com/", label: "praxisstack.com" },
+      { href: "https://www.praxisstack.com/#demo", label: "Try the live demo" },
+    ],
+    screens: true,
+    visuals: [
+      {
+        src: praxisCalendar,
+        alt: "Praxis Stack weekly calendar of color-coded lessons; a selected lesson is marked attended and the charge appears in the family ledger panel.",
+        caption: "Weekly calendar: one click posts the charge.",
+      },
+      {
+        src: praxisInsights,
+        alt: "A teacher's lesson note for a piano student beside AI-generated studio insights grouped into themes, students needing attention, and action items.",
+        caption: "Studio-wide insights from lesson notes.",
+      },
+    ],
+    note: "Screens are from the public demo, which uses a fictional sample studio.",
   },
   {
     label: "Weekend project · iOS",
@@ -62,6 +91,12 @@ const projects = [
 const background = [
   {
     text: "Started college as a performance major at a classical music conservatory in New York City. By my second year, I had founded Fort Lee School of Music and was hiring classmates to teach. Over the next decade, it grew into a music and art school with locations in Fort Lee and New York City, including a street-level Manhattan storefront with its own community performance space.",
+    video: {
+      id: "hAnhX6I9tAs",
+      title: "Michael Gilsinan performing Cateretê by Sérgio Assad",
+      caption: "Cateretê from Suite Brasileira No. 4 by Sérgio Assad, performed in the school's Manhattan space, SUPtown Music & Arts.",
+      duration: "4:20",
+    },
   },
   {
     text: "During the COVID shutdown, I returned to school for a second master's degree in Applied Analytics with a concentration in Management. I have one class remaining and expect to graduate in Fall 2026. I also completed focused Python training in data science, automation, machine learning, and dashboard development.",
@@ -125,7 +160,7 @@ const background = [
         <div class="section-head" data-reveal>
           <div>
             <p class="mono eyebrow">Work</p>
-            <h2 id="work-title" class="headline">Three things worth pointing at.</h2>
+            <h2 id="work-title" class="headline">Four things worth pointing at.</h2>
           </div>
           <p class="section-index">01 / 03</p>
         </div>
@@ -163,6 +198,16 @@ const background = [
                     ))}
                   </div>
                 </div>
+                {project.stats && (
+                  <dl class="project-stats">
+                    {project.stats.map((stat) => (
+                      <div class="project-stat">
+                        <dt class="mono">{stat.label}</dt>
+                        <dd>{stat.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
                 {project.gallery && (
                   <div class="project-gallery">
                     {project.gallery.map((shot) => (
@@ -179,14 +224,14 @@ const background = [
                   </div>
                 )}
                 {project.visuals && (
-                  <div class="project-visuals">
+                  <div class:list={["project-visuals", { screens: project.screens }]}>
                     {project.visuals.map((visual) => (
                       <figure class="project-visual">
                         <Image
                           src={visual.src}
                           alt={visual.alt}
-                          widths={[420, 620, 840]}
-                          sizes="(max-width: 720px) 92vw, 420px"
+                          widths={project.screens ? [620, 840, 1240] : [420, 620, 840]}
+                          sizes={project.screens ? "(max-width: 620px) 92vw, 620px" : "(max-width: 720px) 92vw, 420px"}
                           loading="lazy"
                         />
                         <figcaption class="mono">{visual.caption}</figcaption>
@@ -194,6 +239,7 @@ const background = [
                     ))}
                   </div>
                 )}
+                {project.note && <p class="project-note">{project.note}</p>}
               </article>
             ))
           }
@@ -214,6 +260,7 @@ const background = [
             background.map((item) => (
               <div class="timeline-item" data-reveal>
                 <p>{item.text}</p>
+                {item.video && <VideoEmbed {...item.video} />}
               </div>
             ))
           }

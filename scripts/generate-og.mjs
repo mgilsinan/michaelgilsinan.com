@@ -32,7 +32,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 
   <text x="80" y="395" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif" font-size="108" font-weight="600" fill="#f3f3f5" letter-spacing="-4">Michael Gilsinan</text>
 
-  <text x="80" y="480" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif" font-size="32" font-weight="400" fill="#c8c8d0" letter-spacing="-0.6">1M+ workers · 16,000+ contractors · 40 states</text>
+  <text x="80" y="480" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif" font-size="32" font-weight="400" fill="#c8c8d0" letter-spacing="-0.6">1.5M+ workers · 20,000+ contractors · 40 states</text>
 
   <g transform="translate(80, 550)">
     <text font-family="-apple-system, BlinkMacSystemFont, 'SF Mono', Menlo, monospace" font-size="16" font-weight="500" fill="#9797a4" letter-spacing="0.4">michaelgilsinan.com</text>

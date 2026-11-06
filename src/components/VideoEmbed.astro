@@ -1,0 +1,61 @@
+---
+// YouTube video that stays a plain thumbnail link until someone presses play,
+// so no YouTube player or scripts load with the page.
+interface Props {
+  id: string;
+  title: string;
+  caption: string;
+  duration: string;
+}
+
+const { id, title, caption, duration } = Astro.props;
+---
+
+<figure class="video">
+  <a
+    class="video-frame"
+    href={`https://www.youtube.com/watch?v=${id}`}
+    target="_blank"
+    rel="noreferrer noopener"
+    aria-label={`Play video: ${title}`}
+    data-video-id={id}
+    data-video-title={title}
+  >
+    <img
+      src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
+      alt=""
+      width="1280"
+      height="720"
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="video-play mono" aria-hidden="true">
+      <svg viewBox="0 0 12 14" width="10" height="12" fill="currentColor"><path d="M0 0v14l12-7z"></path></svg>
+      Play · {duration}
+    </span>
+  </a>
+  <figcaption class="mono">{caption}</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>("[data-video-id]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      // Modified clicks keep their usual open-in-a-new-tab behavior.
+      if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+      event.preventDefault();
+
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${link.dataset.videoId}?autoplay=1&rel=0`;
+      iframe.title = link.dataset.videoTitle ?? "Video";
+      iframe.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+
+      const frame = document.createElement("div");
+      frame.className = "video-frame";
+      frame.append(iframe);
+      link.replaceWith(frame);
+      iframe.focus();
+    });
+  });
+</script>
