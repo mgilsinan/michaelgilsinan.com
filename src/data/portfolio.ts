@@ -699,10 +699,7 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
     ],
-    links: [
-      { href: "https://www.praxisstack.com/", label: "praxisstack.com" },
-      { href: "https://www.praxisstack.com/#demo", label: "Try the live demo" },
-    ],
+    links: [{ href: "https://www.praxisstack.com/", label: "praxisstack.com" }],
     note: "Screens are from Praxis Stack's public demo, which uses a fictional sample studio. No real student, family, or staff data appears on this page.",
     ogImage: "/og/portfolio-praxis-stack.jpg",
   },
